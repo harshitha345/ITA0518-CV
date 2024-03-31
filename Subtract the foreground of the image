@@ -1,0 +1,29 @@
+import cv2
+import numpy as np
+
+# Read the input image
+image_path = 'path_to_image.jpg'
+image = cv2.imread(image_path)
+
+# Convert the image to grayscale
+gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+# Apply thresholding to create a binary mask
+_, mask = cv2.threshold(gray_image, 120, 255, cv2.THRESH_BINARY)
+
+# Convert the original image to grayscale
+gray_background = cv2.cvtColor(np.zeros_like(image), cv2.COLOR_BGR2GRAY)
+
+# Extract the foreground
+foreground = cv2.bitwise_or(image, image, mask=mask)
+
+# Extract the background
+background = cv2.bitwise_or(gray_background, gray_background, mask=mask)
+
+# Combine the foreground and background
+result = cv2.subtract(foreground, background)
+
+# Display the result
+cv2.imshow('Foreground Subtraction', result)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
