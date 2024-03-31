@@ -1,0 +1,22 @@
+import numpy as np
+import cv2
+
+# Get the size of the image from the user
+size = int(input("Enter the size of the image: "))
+
+# Create a white image
+image = np.ones((size, size, 3), dtype=np.uint8) * 255
+
+# Define circle parameters
+center_coordinates = (size // 2, size // 2)  # Center coordinates (x, y)
+radius = size // 4
+color = (0, 0, 0)  # Black color
+thickness = 2
+
+# Draw circle on the image
+cv2.circle(image, center_coordinates, radius, color, thickness)
+
+# Display the image
+cv2.imshow('Image with Circle', image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
