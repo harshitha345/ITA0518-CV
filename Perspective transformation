@@ -1,0 +1,23 @@
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+image_path = 'path_to_your_image.jpg'  # Replace with your image path
+image = cv2.imread(image_path)
+image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)  # Convert BGR to RGB for matplotlib
+original_points = np.float32([[0, 0], [image.shape[1], 0], [0, image.shape[0]], [image.shape[1], image.shape[0]]])
+transformed_points = np.float32([[50, 50], [image.shape[1]-50, 50], [50, image.shape[0]-50], [image.shape[1]-50, image.shape[0]-50]])
+perspective_matrix = cv2.getPerspectiveTransform(original_points, transformed_points)
+perspective_image = cv2.warpPerspective(image, perspective_matrix, (image.shape[1], image.shape[0]))
+plt.figure(figsize=(12, 6))
+
+plt.subplot(1, 2, 1)
+plt.imshow(image)
+plt.title('Original Image')
+plt.axis('off')
+
+plt.subplot(1, 2, 2)
+plt.imshow(perspective_image)
+plt.title('Perspective Transformed Image')
+plt.axis('off')
+
+plt.show()
