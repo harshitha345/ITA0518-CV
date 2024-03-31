@@ -1,0 +1,33 @@
+import numpy as np
+import cv2
+
+# Get the size of the image from the user
+size = int(input("Enter the size of the image: "))
+
+# Create a white image
+image = np.ones((size, size, 3), dtype=np.uint8) * 255
+
+# Get the text from the user
+text = input("Enter the text to display: ")
+
+# Choose a font
+font = cv2.FONT_HERSHEY_SIMPLEX
+
+# Determine the font scale and thickness
+font_scale = 1
+thickness = 2
+
+# Get the text size
+text_size = cv2.getTextSize(text, font, font_scale, thickness)[0]
+
+# Calculate the position to place the text in the center
+text_x = (size - text_size[0]) // 2
+text_y = (size + text_size[1]) // 2
+
+# Draw the text on the image
+cv2.putText(image, text, (text_x, text_y), font, font_scale, (0, 0, 0), thickness)
+
+# Display the image
+cv2.imshow('Image with Text', image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
