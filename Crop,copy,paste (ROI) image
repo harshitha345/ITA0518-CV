@@ -1,0 +1,26 @@
+import cv2
+import matplotlib.pyplot as plt
+
+def crop_copy_paste(image_path, x, y, width, height, paste_x, paste_y):
+    image = cv2.imread(image_path)
+    roi = image[y:y+height, x:x+width]
+    image[paste_y:paste_y+height, paste_x:paste_x+width] = roi
+    plt.figure(figsize=(12, 6))
+
+    plt.subplot(1, 2, 1)
+    plt.imshow(cv2.cvtColor(cv2.imread(image_path), cv2.COLOR_BGR2RGB))
+    plt.title('Original Image')
+    plt.axis('off')
+
+    plt.subplot(1, 2, 2)
+    plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
+    plt.title('Modified Image')
+    plt.axis('off')
+
+    plt.show()
+     return image
+image_path = 'path_to_image.jpg'
+x, y, width, height = 50, 50, 200, 200
+paste_x, paste_y = 300, 300
+modified_image = crop_copy_paste(image_path, x, y, width, height, paste_x, paste_y)
+cv2.imwrite('modified_image.jpg', modified_image)
